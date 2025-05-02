@@ -351,7 +351,15 @@ const Portfolio = {
           ".cursor-coordinates"
         );
 
-        if (!cursorDot || !coordinatesDisplay) return;
+        if (!cursorDot) return;
+
+        // Skip coordinate display setup on touch devices
+        if (Portfolio.utils.isTouchDevice()) {
+          if (coordinatesDisplay) {
+            coordinatesDisplay.style.display = "none";
+          }
+          return;
+        }
 
         // Track mouse position
         document.addEventListener(
@@ -361,9 +369,11 @@ const Portfolio = {
             this.mouseY = e.clientY;
 
             // Update coordinates
-            coordinatesDisplay.textContent = `X: ${Math.round(
-              this.mouseX
-            )} | Y: ${Math.round(this.mouseY)}`;
+            if (coordinatesDisplay) {
+              coordinatesDisplay.textContent = `X: ${Math.round(
+                this.mouseX
+              )} | Y: ${Math.round(this.mouseY)}`;
+            }
           }, 30)
         );
 
