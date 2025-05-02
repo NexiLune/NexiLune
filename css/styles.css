@@ -351,6 +351,11 @@ body {
   gap: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-height: 44px; /* Ensures touchable area meets accessibility standards */
 }
 
 @media (hover: hover) {
@@ -401,6 +406,18 @@ body {
   .magnetic-btn:hover::after {
     opacity: 0.8;
     transform: scaleX(1);
+  }
+}
+
+@media (hover: none) {
+  /* Better touch experience on mobile */
+  .magnetic-btn {
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .magnetic-btn:active {
+    transform: scale(0.96);
+    background: rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -483,6 +500,18 @@ body {
   }
   .btn-wrapper {
     margin-top: 30px;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px; /* Reduced gap for better spacing on mobile */
+  }
+  .magnetic-btn {
+    width: 100%;
+    padding: 12px 15px;
+    justify-content: center;
+    font-size: 0.9rem;
+    min-width: unset; /* Remove any minimum width constraints */
+    overflow: hidden; /* Ensure text doesn't overflow */
+    text-overflow: ellipsis; /* Add ellipsis for any text that might overflow */
   }
 }
 
@@ -499,11 +528,20 @@ body {
     bottom: 0;
     margin-top: 60px;
   }
+  .btn-wrapper {
+    flex-wrap: wrap;
+  }
+  .magnetic-btn {
+    min-width: 135px;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .container {
     padding: 40px 60px;
+  }
+  .btn-wrapper {
+    flex-wrap: wrap;
   }
 }
 
