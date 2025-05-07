@@ -91,10 +91,30 @@ const Portfolio = {
         window.innerWidth < 768
       );
     },
+
+    // Remove cursor elements on touch devices
+    removeCursorElementsOnTouch: () => {
+      if (Portfolio.utils.isTouchDevice()) {
+        // Find and completely remove cursor elements from the DOM
+        const cursorDot = document.querySelector('.cursor-dot');
+        const coordinatesDisplay = document.querySelector('.cursor-coordinates');
+
+        if (cursorDot) {
+          cursorDot.parentNode.removeChild(cursorDot);
+        }
+
+        if (coordinatesDisplay) {
+          coordinatesDisplay.parentNode.removeChild(coordinatesDisplay);
+        }
+      }
+    }
   },
 
   // Initialization function
   init() {
+    // Remove cursor on touch devices immediately
+    this.utils.removeCursorElementsOnTouch();
+
     // Cache DOM elements
     this.cacheDOMElements();
 
@@ -541,9 +561,8 @@ const Portfolio = {
             const deltaX = (textX - centerX) / centerX;
             const deltaY = (textY - centerY) / centerY;
 
-            this.style.transform = `perspective(1000px) rotateX(${
-              deltaY * 5
-            }deg) rotateY(${-deltaX * 5}deg)`;
+            this.style.transform = `perspective(1000px) rotateX(${deltaY * 5
+              }deg) rotateY(${-deltaX * 5}deg)`;
 
             // Enhanced glow on hover
             if (nameText) {
@@ -942,9 +961,9 @@ const Portfolio = {
         const particleCount = isLowEnd
           ? Math.min(window.innerWidth / 20, 50)
           : Math.min(
-              window.innerWidth / 12,
-              Portfolio.config.particles.baseCount
-            );
+            window.innerWidth / 12,
+            Portfolio.config.particles.baseCount
+          );
 
         this.connectionDistance = isLowEnd
           ? 120
